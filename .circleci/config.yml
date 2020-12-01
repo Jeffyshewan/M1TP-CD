@@ -122,6 +122,9 @@ jobs:
   back-deploy-heroku:
     docker:
       - image: buildpack-deps:trusty
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
