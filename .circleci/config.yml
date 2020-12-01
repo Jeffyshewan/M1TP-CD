@@ -16,6 +16,7 @@ jobs:
           paths:
             - node_modules
           key: dependencies-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
+  
   lint:
     docker:
       - image: circleci/node:dubnium-browsers
@@ -26,6 +27,7 @@ jobs:
           key: dependencies-{{ checksum "package.json" }}-{{ .Environment.CACHE_VERSION }}
       - run: yarn lint
       - run: yarn format:check
+  
   server-doc-build:
     docker:
       - image: circleci/node:dubnium-browsers
@@ -45,6 +47,7 @@ jobs:
           root: /tmp
           paths:
             - server-doc
+  
   server-doc-deploy:
     docker:
       - image: circleci/node:dubnium-browsers
@@ -55,6 +58,7 @@ jobs:
       - run:
           name: Deploy app
           command: echo todo && false
+  
   back-test-unit:
     docker:
       - image: circleci/node:dubnium-browsers
@@ -72,6 +76,7 @@ jobs:
             API_HOST: localhost
             API_PROTOCOL: http
       - run: yarn add codecov && yarn codecov
+  
   back-test-e2e:
     docker:
       - image: circleci/node:dubnium-browsers
@@ -121,7 +126,8 @@ jobs:
       - checkout
       - run:
           name: Heroku Deploy
-          command: echo todo && false
+          command: | 
+            git push https://github.com/Jeffyshewan/M1TP-CD.git main
       - run:
           name: Smoke Test
           command: echo todo && false
